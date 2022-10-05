@@ -1,8 +1,6 @@
 import pandas as pd
 
 
-import nltk
-nltk.download('stopwords')
 import seaborn as sns
 color = sns.color_palette()
 import folium
