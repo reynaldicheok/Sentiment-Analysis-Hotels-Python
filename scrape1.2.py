@@ -14,7 +14,8 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
 }
 start_url='https://www.booking.com/reviews/us/hotel/showboat-atlantic-city.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCjZ63mQbAAgHSAiQwOGNmZjYzZS1kYzdmLTQyN2ItOTliOS01NDUxMGIxMzJkMzTYAgbgAgE&sid=0592c1baed62f1328376ae7ea3a086ed'
-
+#below is the multiple links link.
+#start_url ='https://www.booking.com/reviews/sg/city/singapore.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE'
 s=Service(r'D:\School\INF1002\Week2\chromedriver.exe') #Local file location for chromedriver.exe to use selenium to use the webbrowser
 
 driver = webdriver.Chrome(service=s) #To get the chrome service started
@@ -26,6 +27,13 @@ page_source=driver.page_source
 with open('pagetestzz.html', 'w+',encoding="utf-8") as f:
     f.write(driver.page_source) #Saves and writes the page source or html code locally
 
+#mutliple links scraped    
+#links=[]
+#for link in soup.find_all(class_="rlp-main-hotel-review__review_link"): #to append the link that is retrieved from html
+#    review_link=link.a.get('href')
+#    links.append('https://www.booking.com'+review_link) #because the html containing the link does not have the https link
+#print(links)
+    
 writeheader=True
 while True:
 
