@@ -43,20 +43,27 @@ page_source=driver.page_source
 with open('pagetestzz.html', 'w+',encoding="utf-8") as f:
     f.write(driver.page_source) #Saves and writes the page source or html code locally
 
-review_url=driver.current_url
-print(review_url)
-driver.get(review_url)
-page_source=driver.page_source
-soup = BeautifulSoup(page_source, 'lxml')  # Parses the data/html code
-#review_s=soup.find_all('li', attrs={'class':"rlp-main-hotel-review__review_link"})
-#review_s=soup.find_all(class="rlp-main-hotel-review__review_link")
-#categories_pos = [t.get_text(strip=True) for t in soup.find_all('a', attrs={'href': 'rlp-main-hotel-review__review_link'})]
-#links = [link.get('href') for link in soup.select('div.rlp-main-hotel__info > a:nth-of-type(1)')]
 links=[]
-for link in soup.find_all(class_="rlp-main-hotel-review__review_link"): #to append the link that is retrieved from html
-    review_link=link.a.get('href')
-    links.append('https://www.booking.com'+review_link) #because the html containing the link does not have the https link
-print(links)
+while True:
+    try:
+        review_url = driver.current_url
+        print(review_url)
+        driver.get(review_url)
+        page_source = driver.page_source
+        soup = BeautifulSoup(page_source, 'lxml')  # Parses the data/html code
+
+        for link in soup.find_all(
+                class_="rlp-main-hotel-review__review_link"):  # to append the link that is retrieved from html
+            review_link = link.a.get('href')
+            links.append(
+                'https://www.booking.com' + review_link)  # because the html containing the link does not have the https link
+        print(links)
+        driver.find_element(By.CSS_SELECTOR, "a.rlp-main-pagination__btn-txt--next").click()
+        writeheader = True
+    except:
+        print("error")
+        break
+        
 writeheader=True
 for x in range(len(links)):
     driver.get(links[x])
