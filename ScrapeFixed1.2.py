@@ -44,6 +44,7 @@ with open('pagetestzz.html', 'w+',encoding="utf-8") as f:
     f.write(driver.page_source) #Saves and writes the page source or html code locally
 
 links=[]
+
 while True:
     try:
         review_url = driver.current_url
