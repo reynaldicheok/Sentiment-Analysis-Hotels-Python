@@ -357,17 +357,6 @@ def ushotelvicinitymap(x, y):
     return hotelvicinityname
 
 
-# def reviewfilter(x,y):
-#     df=x
-#     filteredreview=[]
-#     selectedword=y
-#     count=0
-#     for i in range(0, len(df)):
-#         if selectedword in str(df['reviews_text'][i]):
-#             addin=df['name'][i],df['reviews_text'][i]
-#             filteredreview.append(addin)
-#     return filteredreview
-
 
 # Output file names, heatmap ontop hotelvicnity below
 
