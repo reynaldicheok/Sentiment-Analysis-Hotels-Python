@@ -337,21 +337,11 @@ def ushotelvicinitymap(x, y):
             highreviewtext = ''
             lowreviewtext = ''
 
-            # chart = alt.Chart(source).mark_bar().encode(x='Review Rating', y='Amount of review').properties(width=300,height=200,autosize=alt.AutoSizeParams(type='pad',contains='padding'))
-            # vis1 = chart.to_json()
 
-            # popup = "<html></html>" \
-            #         "<body>" + "<p>" + df['name'][i] + "</p>" + \
-            #         "<p>Latitude:" + str(df['latitude'][i])[0:7] + "</p>" + \
-            #         "<p>Longitude:" + str(df['longitude'][i])[0:7] + "</p>" + \
-            #         "<p>Latest Review:" + str(df['reviews_rating'][i]) + "</p>" + \
-            #         "</body>"
 
-            # addtomap = folium.Marker(location=[df['latitude'][i], df['longitude'][i]], tooltip=popup,popup=folium.Popup(max_width=400).add_child(folium.VegaLite(vis1, width=600, height=200))).add_to(m)
-
-    m.save(pointername + ' HotelVicinity2.html')
-    # webbrowser.open(pointername + ' HotelVicinity2.html')
-    hotelvicinityname = pointername + ' HotelVicinity2.html'
+    m.save(pointername + ' HotelVicinity.html')
+    # webbrowser.open(pointername + ' HotelVicinity.html')
+    hotelvicinityname = pointername + ' HotelVicinity.html'
     return hotelvicinityname
 
 
@@ -360,4 +350,4 @@ def ushotelvicinitymap(x, y):
 
 # heatmapname = heatmap(df01)
 hotelvicinityname = ushotelvicinitymap(df01, df02)
-# filtered = reviewfilter(df01,'staff')
+
