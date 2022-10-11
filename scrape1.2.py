@@ -27,6 +27,13 @@ page_source=driver.page_source
 with open('pagetestzz.html', 'w+',encoding="utf-8") as f:
     f.write(driver.page_source) #Saves and writes the page source or html code locally
 
+#this below is for the multi link scrape 
+#review_url=driver.current_url
+#print(review_url)
+#driver.get(review_url)
+#page_source=driver.page_source
+#soup = BeautifulSoup(page_source, 'lxml')  # Parses the data/html code    
+
 #mutliple links scraped    
 #links=[]
 #for link in soup.find_all(class_="rlp-main-hotel-review__review_link"): #to append the link that is retrieved from html
@@ -35,6 +42,7 @@ with open('pagetestzz.html', 'w+',encoding="utf-8") as f:
 #print(links)
     
 writeheader=True
+#for x in range(len(links)):
 while True:
 
     newurl=driver.current_url
@@ -128,7 +136,10 @@ while True:
     combined=0
     review_score=0
     categories_pos=0
-    driver.find_element("xpath","//*[contains(@id, 'review_next_page_link')]").click()
+    #try:
+        driver.find_element("xpath","//*[contains(@id, 'review_next_page_link')]").click()
+     #except:
+        #continue
 
 driver.quit()
 
