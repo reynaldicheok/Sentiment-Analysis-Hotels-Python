@@ -1,10 +1,8 @@
 import pandas as pd
 import seaborn as sns
-
 color = sns.color_palette()
 import folium
 from folium.plugins import HeatMap
-
 import branca.colormap
 from collections import defaultdict
 
