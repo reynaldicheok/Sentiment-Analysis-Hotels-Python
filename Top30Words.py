@@ -10,7 +10,6 @@ color = sns.color_palette()
 
 
 df = pd.read_csv('datafiniti_hotel_reviews (2).csv', encoding = "ISO-8859-1")
-
 _review_ = []
 # getting review strings and appending it to the list
 for review in df.reviews_text:

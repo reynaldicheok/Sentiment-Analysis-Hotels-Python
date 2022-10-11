@@ -5,6 +5,7 @@ import folium
 from folium.plugins import HeatMap
 import branca.colormap
 from collections import defaultdict
+import altair as alt
 
 
 # User input
@@ -136,8 +137,7 @@ def ushotelvicinitymap(x, y):
     pointerhighreviewtext = ''
     highreviewtext = ''
     lowreviewtext = ''
-    import altair as alt
-    import pandas as pd
+
     # Loop through master excel file, check if nearby hotels with required lat/long
     for i in range(0, len(df)):
         if (int(df['latitude'][i]) > differencelatitudem2 and int(df['latitude'][i]) < differencelatitudep2) and (
