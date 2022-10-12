@@ -47,10 +47,11 @@ def scrapemulti(x,y):
         f.write(driver.page_source)  # Saves and writes the page source or html code locally
 
     links = []
+    name_of_hotel_csv={}
     while True:
         try:
             review_url = driver.current_url
-            print(review_url)
+            #print(review_url)
             driver.get(review_url)
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, 'lxml')  # Parses the data/html code
@@ -60,7 +61,7 @@ def scrapemulti(x,y):
                 review_link = link.a.get('href')
                 links.append(
                     'https://www.booking.com' + review_link)  # because the html containing the link does not have the https link
-            print(links)
+            #print(links)
             driver.find_element(By.CSS_SELECTOR, "a.rlp-main-pagination__btn-txt--next").click()
             writeheader = True
         except:
@@ -178,25 +179,37 @@ def scrapemulti(x,y):
                             {'id': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
                              'review_pos': item[3], 'review_neg': item[4], 'review-score': item[5]})
 
-                with open('datafiniti_hotel_reviews (2) - Copy.csv', "a", encoding="utf=8", newline='') as csvFile:
-                    fieldnames = ['id', 'dateadded', 'dateupdated', 'address', 'categories', 'primarycategories',
-                                  'city',
-                                  'country',
-                                  'keys', 'latitude', 'longitude', 'name', 'postalcode', 'province', 'reviews_date',
-                                  'reviews_dateseen', 'reviews_rating', 'reviews_sourceurls', 'reviews_text']
+                with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
+                    fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg',
+                                  'review_text', 'review-score']
+                    writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
+                    if writeheader == True:
+                        writer.writeheader()
+                        writeheader = False
+                    for item in combined2:
+                        writer.writerow(
+                            {'hotelname': hotelname[0], 'postalcode': item[0], 'latitude': item[1],
+                             'longitude': item[2],
+                             'review_pos': item[3], 'review_neg': item[4],
+                             'review_text': str(item[3]) + ' ' + str(item[4]), 'review-score': item[5]})
+
+                with open('SingaporeHotel.csv', "a", newline='', encoding="utf-8") as csvFile:
+                    fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg',
+                                  'review_text', 'review-score']
                     writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
                     for item in combined2:
                         writer.writerow(
-                            {'id': '', 'dateadded': '', 'dateupdated': '', 'address': '', 'categories': '',
-                             'primarycategories': '',
-                             'city': '', 'country': '', 'keys': '', 'latitude': item[1], 'longitude': item[2],
-                             'name': hotelname[0], 'postalcode': item[0], 'province': '', 'reviews_date': '',
-                             'reviews_dateseen': '', 'reviews_rating': item[5], 'reviews_sourceurls': '',
-                             'reviews_text': item[3] + item[4]})
+                            {'hotelname': hotelname[0], 'postalcode': item[0], 'latitude': item[1],
+                             'longitude': item[2],
+                             'review_pos': item[3], 'review_neg': item[4],
+                             'review_text': str(item[3]) + ' ' + str(item[4]),
+                             'review-score': item[5]})
                 csvFile.close()
                 combined = 0
                 review_score = 0
                 categories_pos = 0
+                name_of_hotel_csv.update({hotelname[0]+'.csv':x})
+
 
                 driver.find_element("xpath", "//*[contains(@id, 'review_next_page_link')]").click()
             except:
@@ -204,7 +217,10 @@ def scrapemulti(x,y):
                 break
 
     driver.quit()
-    hotel_csv_name = hotelname[0] + ".csv"
+    hotel_csv_name_values = list(name_of_hotel_csv.keys())
+    hotel_csv_name=hotel_csv_name_values
     return hotel_csv_name
 
-scrapemulti('https://www.booking.com/reviews/sg/city/singapore.en-gb.html?aid=356980&sid=248efadb06977d69b94338011302293d&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE',15)
+A=scrapemulti('https://www.booking.com/reviews/sg/city/singapore.en-gb.html?aid=356980&sid=248efadb06977d69b94338011302293d&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE',2)
+A=str(','.join(A))
+print(A)
