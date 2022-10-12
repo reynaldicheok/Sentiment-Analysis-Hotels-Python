@@ -137,18 +137,7 @@ def scrapeone(x):
             'print output to csv'
 
             with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
-                fieldnames = ['id', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg', 'review-score']
-                writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
-                if writeheader == True:
-                    writer.writeheader()
-                    writeheader = False
-                for item in combined2:
-                    writer.writerow(
-                        {'id': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
-                         'review_pos': item[3], 'review_neg': item[4], 'review-score': item[5]})
-
-            with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
-                fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg','review_text', 'review-score']
+                fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg', 'review_text', 'review-score']
                 writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
                 if writeheader == True:
                     writer.writeheader()
