@@ -9,7 +9,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-input_url = 'https://www.booking.com/reviews/sg/hotel/the-barracks-by-far-east-hospitality.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE&sid=248efadb06977d69b94338011302293d'
+input_url = 'https://www.booking.com/reviews/sg/hotel/citadines-rochor.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE&sid=0592c1baed62f1328376ae7ea3a086ed'
 
 
 def review_check_pos(positive_review):
@@ -102,7 +102,7 @@ def scrapeone(x):
             from geopy.geocoders import Nominatim
 
             geolocator = Nominatim(user_agent="geoapiExercises")
-            location = geolocator.geocode('Singapore ' + postalcodefinal)
+            location = geolocator.geocode(postalcodefinal+ ' Singapore, SG')
             getLoc = location.raw
 
             updatedscore = []
