@@ -222,4 +222,5 @@ def scrapemulti(x,y):
     return hotel_csv_name
 
 A=scrapemulti('https://www.booking.com/reviews/sg/city/singapore.en-gb.html?aid=356980&sid=248efadb06977d69b94338011302293d&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE',2)
-print(','.join(A))
+A=str(','.join(A))
+print(A)
