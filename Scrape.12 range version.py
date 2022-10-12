@@ -51,7 +51,7 @@ def scrapemulti(x,y):
     while True:
         try:
             review_url = driver.current_url
-            print(review_url)
+            #print(review_url)
             driver.get(review_url)
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, 'lxml')  # Parses the data/html code
@@ -61,7 +61,7 @@ def scrapemulti(x,y):
                 review_link = link.a.get('href')
                 links.append(
                     'https://www.booking.com' + review_link)  # because the html containing the link does not have the https link
-            print(links)
+            #print(links)
             driver.find_element(By.CSS_SELECTOR, "a.rlp-main-pagination__btn-txt--next").click()
             writeheader = True
         except:
@@ -208,7 +208,7 @@ def scrapemulti(x,y):
                 combined = 0
                 review_score = 0
                 categories_pos = 0
-                name_of_hotel_csv.update({x:hotelname[0]+'.csv'})
+                name_of_hotel_csv.update({hotelname[0]+'.csv':x})
 
 
                 driver.find_element("xpath", "//*[contains(@id, 'review_next_page_link')]").click()
@@ -217,8 +217,9 @@ def scrapemulti(x,y):
                 break
 
     driver.quit()
-    hotel_csv_name = name_of_hotel_csv.values()
+    hotel_csv_name_values = list(name_of_hotel_csv.keys())
+    hotel_csv_name=hotel_csv_name_values
     return hotel_csv_name
 
 A=scrapemulti('https://www.booking.com/reviews/sg/city/singapore.en-gb.html?aid=356980&sid=248efadb06977d69b94338011302293d&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE',2)
-print(A)
+print(','.join(A))
