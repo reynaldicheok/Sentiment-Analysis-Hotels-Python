@@ -147,20 +147,25 @@ def scrapeone(x):
                         {'id': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
                          'review_pos': item[3], 'review_neg': item[4], 'review-score': item[5]})
 
-            with open('datafiniti_hotel_reviews (2) - Copy.csv', "a", newline='', encoding="utf-8") as csvFile:
-                fieldnames = ['id', 'dateadded', 'dateupdated', 'address', 'categories', 'primarycategories', 'city',
-                              'country',
-                              'keys', 'latitude', 'longitude', 'name', 'postalcode', 'province', 'reviews_date',
-                              'reviews_dateseen', 'reviews_rating', 'reviews_sourceurls', 'reviews_text']
+            with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
+                fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg','review_text', 'review-score']
+                writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
+                if writeheader == True:
+                    writer.writeheader()
+                    writeheader = False
+                for item in combined2:
+                    writer.writerow(
+                        {'hotelname': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
+                         'review_pos': item[3], 'review_neg': item[4], 'review_text': str(item[3]) +' '+ str(item[4]),'review-score': item[5]})
+
+            with open('SingaporeHotel.csv', "a", newline='', encoding="utf-8") as csvFile:
+                fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg','review_text', 'review-score']
                 writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
                 for item in combined2:
                     writer.writerow(
-                        {'id': '', 'dateadded': '', 'dateupdated': '', 'address': '', 'categories': '',
-                         'primarycategories': '',
-                         'city': '', 'country': '', 'keys': '', 'latitude': item[1], 'longitude': item[2],
-                         'name': hotelname[0], 'postalcode': item[0], 'province': '', 'reviews_date': '',
-                         'reviews_dateseen': '', 'reviews_rating': item[5], 'reviews_sourceurls': '',
-                         'reviews_text': item[3] + item[4]})
+                        {'hotelname': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
+                         'review_pos': item[3], 'review_neg': item[4], 'review_text': str(item[3]) + ' ' + str(item[4]),
+                         'review-score': item[5]})
             csvFile.close()
             driver.find_element("xpath", "//*[contains(@id, 'review_next_page_link')]").click()
         except:
