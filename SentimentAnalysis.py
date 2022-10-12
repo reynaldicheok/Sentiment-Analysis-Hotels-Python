@@ -27,7 +27,7 @@ def read_csv(filename):
 
 #Use this function to generate a graph for data visualization with reference to the function read_csv
 def generate_graph(csv_df):
-    fig = px.histogram(csv_df, x="reviews_rating")
+    fig = px.histogram(csv_df, x="reviews_rating") #Change according to the current data set using
 
     # This Below is for the airbnb locally sourced data
     # fig = px.histogram(df, x="review_scores_rating")
@@ -58,12 +58,13 @@ def remove_punctuation(text):
  #Pre trained model to classify the test data
 #Function to generate the data frame analysis column along with the vader lexicon compound numbers
 #Used to get a solid breakdown later
-def generate_dataframe_column(dataframe):
-    dataframe = dataframe.dropna(subset=['reviews_text'])
-    dataframe['reviews_text'] = dataframe['reviews_text'].apply(remove_punctuation)
-    dataframenew = dataframe[['reviews_text']]
+def generate_dataframe_column(dataframe_input):
+    dataframez = dataframe_input.dropna(subset=['reviews_text'])
+
+    dataframenew = dataframez[['reviews_text']]
     function = lambda title: vader.polarity_scores(title)['compound']
     dataframenew['compound'] = dataframenew['reviews_text'].apply(function)
+
     return dataframenew
 
 
@@ -121,9 +122,9 @@ if __name__ == '__main__':
     #Sample on how to use the whole program
     print("Test")
     test=read_csv(r"C:\Users\Reynaldi\Downloads\SITProject\datafiniti_hotel_reviews.csv") #Use your own local file location
-    #graph=generate_graph(test)
+    graph=generate_graph(test)
 
-    #graphz=generate_stopword(test)
+    graphz=generate_stopword(test)
     dataframez=generate_dataframe_column(test)
     new_dataframez = breakdown_dataframe(dataframez)
 
