@@ -23,26 +23,35 @@ df02 = pd.read_csv('Citadines Rochor.csv', encoding="ISO-8859-1")
 def heatmap(x):
     df = x
     # Heatmap SG
-    # m = folium.Map([1.44255, 103.79580], zoom_start=11)
-    # HeatMap(df2[['latitude', 'longitude']].dropna(), radius=8,
-    #         gradient={0.2: 'blue', 0.4: 'purple', 0.6: 'orange', 1.0: 'red'}).add_to(m)
-    # m.save('output.html')
-
-    # Heatmap US
-    m = folium.Map([37.090240, -95.712891], zoom_start=5)
+    m = folium.Map([1.44255, 103.79580], zoom_start=11)
     steps = 20
     colormap = branca.colormap.linear.YlOrRd_09.scale(0, 1).to_step(steps)
     gradient_map = defaultdict(dict)
     for i in range(steps):
         gradient_map[1 / steps * i] = colormap.rgb_hex_str(1 / steps * i)
 
-    HeatMap(df[['latitude', 'longitude']].dropna(), radius=13,
-            gradient={0.2: 'blue', 0.4: 'purple', 0.6: 'orange', 1.0: 'red'}).add_to(m)
+    HeatMap(df[['latitude', 'longitude']].dropna(), radius=13, gradient={0.4: 'blue', 0.6: 'purple', 0.8: 'orange', 1.0: 'red'}).add_to(m)
     colormap.add_to(m)
     m.save('USHeatMap.html')
     # webbrowser.open('USHeatMap.html')
     heatmapname = 'USHeatMap.html'
     return heatmapname
+
+    # Heatmap US
+    # m = folium.Map([37.090240, -95.712891], zoom_start=5)
+    # steps = 20
+    # colormap = branca.colormap.linear.YlOrRd_09.scale(0, 1).to_step(steps)
+    # gradient_map = defaultdict(dict)
+    # for i in range(steps):
+    #     gradient_map[1 / steps * i] = colormap.rgb_hex_str(1 / steps * i)
+    #
+    # HeatMap(df[['latitude', 'longitude']].dropna(), radius=13,
+    #         gradient={0.2: 'blue', 0.4: 'purple', 0.6: 'orange', 1.0: 'red'}).add_to(m)
+    # colormap.add_to(m)
+    # m.save('USHeatMap.html')
+    # # webbrowser.open('USHeatMap.html')
+    # heatmapname = 'USHeatMap.html'
+    # return heatmapname
 
 
 # Hotel Vicinity function
@@ -337,5 +346,5 @@ def ushotelvicinitymap(x, y):
 # Output file names, heatmap ontop hotelvicnity below
 
 # heatmapname = heatmap(df01)
-hotelvicinityname = ushotelvicinitymap(df01, df02)
+# hotelvicinityname = ushotelvicinitymap(df01, df02)
 
