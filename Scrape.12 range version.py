@@ -35,7 +35,7 @@ def scrapemulti(x,y):
     #review_start_url = 'https://www.booking.com/reviews/sg/city/singapore.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE'
     review_start_url = x
     s = Service(
-        r'C:\Users\user\PycharmProjects\SITProject\chromedriver.exe')  # Local file location for chromedriver.exe to use selenium to use the webbrowser
+        r'D:\School\INF1002\Week2\chromedriver.exe')  # Local file location for chromedriver.exe to use selenium to use the webbrowser
 
     driver = webdriver.Chrome(service=s)  # To get the chrome service started
     driver.get(review_start_url)  # To go to the url
@@ -155,8 +155,7 @@ def scrapemulti(x,y):
                         updatedscore.append(5)
                     if int(x) == 10:
                         updatedscore.append(5)
-                scoreandreview = []
-                scorecount = 1
+
 
                 combined = zip(review_posz, review_negz, updatedscore)
 
@@ -166,19 +165,6 @@ def scrapemulti(x,y):
                     combined2.append(addin)
 
                 'print output to csv'
-
-                with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
-                    fieldnames = ['id', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg',
-                                  'review-score']
-                    writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
-                    if writeheader == True:
-                        writer.writeheader()
-                        writeheader = False
-                    for item in combined2:
-                        writer.writerow(
-                            {'id': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
-                             'review_pos': item[3], 'review_neg': item[4], 'review-score': item[5]})
-
                 with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
                     fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg',
                                   'review_text', 'review-score']
