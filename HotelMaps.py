@@ -275,6 +275,9 @@ def ushotelvicinitymap(x, y):
                     <tr><td>
                     <div id="vis4"></div>   
                     </td><tr>
+                    <tr><td>
+                    <div id="vis5"></div>   
+                    </td><tr>
                     </table>
                     <script type="text/javascript">
                       vegaEmbed('#vis0', {spec0}).catch(console.error);
@@ -282,6 +285,7 @@ def ushotelvicinitymap(x, y):
                       vegaEmbed('#vis2', {spec2}).catch(console.error);
                       vegaEmbed('#vis3', {spec3}).catch(console.error);
                       vegaEmbed('#vis4', {spec4}).catch(console.error);
+                      vegaEmbed('#vis5', {spec5}).catch(console.error);
                     </script>
                     </body>
                     </html>
@@ -340,6 +344,14 @@ def ushotelvicinitymap(x, y):
                                          currentscore2[4]],
                 }
             )
+
+            source5 = pd.DataFrame(
+                {
+                    'Review Rating': ['Positive', 'Negative'],
+                    pointername: [pointerpie[0], pointerpie[1]],
+                    df['hotelname'][i]: [hotelpie[0], hotelpie[1]],
+                }
+            )
             chart0 = alt.Chart(source0).mark_bar().encode(alt.X('Review Rating'), alt.Y('Amount of review'),
                                                           tooltip=alt.Tooltip('Amount of review')).properties(width=300,
                                                                                                               height=200,
@@ -383,6 +395,14 @@ def ushotelvicinitymap(x, y):
                                                                                                     autosize=alt.AutoSizeParams(
                                                                                                         type='pad',
                                                                                                         contains='padding'))
+            chart5 = alt.Chart(source5).mark_bar().encode(alt.X('Positive/Negative amount:Q'), alt.Y('Sentiment:N'),
+                                                          tooltip=alt.Tooltip('Positive/Negative amount:Q'),
+                                                          color='Sentiment:N', row=alt.Row('Review Rating',
+                                                                                           sort=['Positive',
+                                                                                                 'Negative'])).transform_fold(
+                as_=['Sentiment', 'Positive/Negative amount'], fold=[pointername, df['hotelname'][i]]).properties(
+                width=700, title=pointername + ' against ' + df['hotelname'][i],
+                autosize=alt.AutoSizeParams(type='pad', contains='padding'))
 
             charts_code = html_template.format(
                 vega_version=alt.VEGA_VERSION,
@@ -393,6 +413,7 @@ def ushotelvicinitymap(x, y):
                 spec2=chart2.to_json(indent=None),
                 spec3=chart3.to_json(indent=None),
                 spec4=chart4.to_json(indent=None),
+                spec5=chart5.to_json(indent=None),
             )
 
             iframe = branca.element.IFrame(html=charts_code, width=1100, height=800)
