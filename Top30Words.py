@@ -112,3 +112,4 @@ viz_5.set_xlabel('Words')
 viz_5.set_xticklabels(viz_5.get_xticklabels(), rotation=80)
 plt.savefig('top15words.png')
 plt.show()
+
