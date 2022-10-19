@@ -12,8 +12,7 @@ color = sns.color_palette()
 import string
 
 
-#def top15_words(hoteloutputcsv):
-df = pd.read_csv('Hotel Boss.csv', encoding = "ISO-8859-1")
+df = pd.read_csv('Citadines Rochor.csv', encoding = "ISO-8859-1")
 
 #synonym check
 _review_2 = []
@@ -32,7 +31,7 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                   "good","bad","nice","like","best","review","reviews","negative","positive","little","well","check","super",
                   "quite","india","singapore","malaysia","china","japan","korea","philippines","door","day","night","everything",
                   "nothing","entrance","need","first","last","close","even","in","pillow","pillows","still","wet","value","late",
-                  "guest","guests","always","morning","sleep","place","places","feel","feels","people","floor","front","worth",
+                  "guest","guests","always","morning","sleep","places","feel","feels","people","floor","front","worth",
                   "walking","lovely","love","made","make","plus","overall","air","free","pressure","it","access","go","wonderful",
                   "probably","2","near","staying","within","better","request","around","size","long","way","activity","too","got"
                   "activities","two","loved","especially","much","property","back","desk","in","1","bit","ice","tap","told","side",
@@ -41,7 +40,9 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                   "easy","hard","difficult","extremely","extreme","4","smell","5","6","7","8","9","10","money","every","food","space",
                   "distance","many","hear","said","pay","days","ok","okay","price","luggage","pretty","fast","all","due","noise","dirty",
                   "filthy","greasy","sooty","moldy","grimy","grubby","soiled","unwashed","stain","stained","spotted","cloudy","muddy",
-                  "dusty","paper"])
+                  "dusty","paper","street","another","open","corridor","outside","nice","poor","use","rude","lavender","want","theres",
+                  "see","friendly","helpful","disgusting","terrible","areas","liked","needed","turn","keep","short","tall","come","came",
+                  "went"])
 _review_count_ = []
 
 # getting name string from our list and using split function, later appending to list above
