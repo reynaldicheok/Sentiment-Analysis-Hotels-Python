@@ -13,7 +13,10 @@ import string
 
 
 df = pd.read_csv('Citadines Rochor.csv', encoding = "ISO-8859-1")
+"""this is where the csv file will dynamically change so can just run scrapeone and input the csv file created from scrapeone into here.
+   still working on making this a function"""
 
+""""""
 #synonym check
 _review_2 = []
 # getting review strings and appending it to the _review_ list
@@ -31,7 +34,7 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                   "good","bad","nice","like","best","review","reviews","negative","positive","little","well","check","super",
                   "quite","india","singapore","malaysia","china","japan","korea","philippines","door","day","night","everything",
                   "nothing","entrance","need","first","last","close","even","in","pillow","pillows","still","wet","value","late",
-                  "guest","guests","always","morning","sleep","places","feel","feels","people","floor","front","worth",
+                  "guest","guests","always","morning","sleep","places","feel","feels","people","floor","front","worth","gone",
                   "walking","lovely","love","made","make","plus","overall","air","free","pressure","it","access","go","wonderful",
                   "probably","2","near","staying","within","better","request","around","size","long","way","activity","too","got"
                   "activities","two","loved","especially","much","property","back","desk","in","1","bit","ice","tap","told","side",
@@ -42,8 +45,9 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                   "filthy","greasy","sooty","moldy","grimy","grubby","soiled","unwashed","stain","stained","spotted","cloudy","muddy",
                   "dusty","paper","street","another","open","corridor","outside","nice","poor","use","rude","lavender","want","theres",
                   "see","friendly","helpful","disgusting","terrible","areas","liked","needed","turn","keep","short","tall","come","came",
-                  "went"])
-_review_count_ = []
+                  "went","huge","change","changes","found","home"])
+_review_count_ = [] 
+"""^this is where all the top listed words will be so you can use this for your part"""
 
 # getting name string from our list and using split function, later appending to list above
 # Punctuation: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
@@ -98,6 +102,7 @@ for i in range(len(_review_count_)):
     else:
         continue
 
+"""this is where the graph will be created. can just ignore"""
 _top_15_w = Counter(_review_count_).most_common()
 # Sort number of words viewed
 _top_15_w = _top_15_w[0:15]
@@ -113,3 +118,4 @@ viz_5.set_xlabel('Words')
 viz_5.set_xticklabels(viz_5.get_xticklabels(), rotation=80)
 plt.savefig('top15words.png')
 plt.show()
+
