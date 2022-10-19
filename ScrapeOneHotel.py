@@ -8,8 +8,9 @@ from scrapy.crawler import CrawlerProcess
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from geopy.extra.rate_limiter import RateLimiter
 
-input_url = 'https://www.booking.com/reviews/sg/hotel/citadines-rochor.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE&sid=0592c1baed62f1328376ae7ea3a086ed'
+input_url = 'https://www.booking.com/reviews/sg/hotel/four-season-singapore.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE&sid=0592c1baed62f1328376ae7ea3a086ed&customer_type=total&hp_nav=0&old_page=0&order=featuredreviews&page=1&r_lang=en&rows=75&'
 
 
 def review_check_pos(positive_review):
@@ -20,7 +21,6 @@ def review_check_pos(positive_review):
     elif pos_review != []:
         return True
 
-
 def review_check_neg(negative_review):
     neg_review = [t.get_text(strip=True) for t in negative_review.find_all('p', attrs={
         'class': 'review_neg'})]
@@ -28,7 +28,6 @@ def review_check_neg(negative_review):
         return False
     elif neg_review != []:
         return True
-
 
 def scrapeone(x):
     headers = {
@@ -79,11 +78,11 @@ def scrapeone(x):
                 if review_check_pos(review_fix_test) == True:
                     review_pos.append(pos_review)
                 if review_check_pos(review_fix_test) == False:
-                    review_pos.append(["No positive review"])
+                    review_pos.append([""])
                 if review_check_neg(review_fix_test) == True:
                     review_neg.append(neg_review)
                 if review_check_neg(review_fix_test) == False:
-                    review_neg.append(["No negative review"])
+                    review_neg.append([""])
             review_negz = [item for sublist in review_neg for item in sublist]
             review_negz = [item.replace('\n', '') for item in review_negz]
 
@@ -102,14 +101,14 @@ def scrapeone(x):
             from geopy.geocoders import Nominatim
 
             geolocator = Nominatim(user_agent="geoapiExercises")
-            location = geolocator.geocode(postalcodefinal+ ' Singapore, SG')
+            location = geolocator.geocode(postalcodefinal+ ' SG', exactly_one=True, timeout=60)
             getLoc = location.raw
 
             updatedscore = []
-
             # Append Review Score together with Review
             review_score = [float(x) for x in review_score]
             review_score = [int(x) for x in review_score]
+
 
             for x in review_score:
                 if int(x) < 5:
@@ -124,8 +123,7 @@ def scrapeone(x):
                     updatedscore.append(5)
                 if int(x) == 10:
                     updatedscore.append(5)
-            scoreandreview = []
-            scorecount = 1
+
 
             combined = zip(review_posz, review_negz, updatedscore)
 
@@ -160,11 +158,10 @@ def scrapeone(x):
         except:
             print("fail or end of pages")
             break
-
     hoteloutputcsv = hotelname[0] + ".csv"
     return hoteloutputcsv
     driver.quit()
 
 
 test = scrapeone(input_url)
-print(test)
+
