@@ -92,6 +92,8 @@ def scrapemulti(x,y):
                 hoteladdress = [t.get_text(strip=True) for t in soup.find_all('p', attrs={'class': 'hotel_address'})]
                 review_score = [t.get_text(strip=True) for t in
                                 soup.find_all('span', attrs={'class': 'review-score-badge'})]
+                overall_review = [review_score[0]]
+                scoresz = [t.get_text(strip=True) for t in soup.find_all('p', attrs={'class': 'review_score_value'})]
                 review_score = review_score[1::]
 
                 review_fix = [t.get_text for t in soup.find_all("div", attrs={
@@ -167,7 +169,8 @@ def scrapemulti(x,y):
                 'print output to csv'
                 with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
                     fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg',
-                                  'review_text', 'review-score']
+                                  'review_text', 'review-score','overall_score','cleanliness','comfort','location','facilities',
+                                  'staff','value_for_money','Free_Wifi']
                     writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
                     if writeheader == True:
                         writer.writeheader()
@@ -177,8 +180,11 @@ def scrapemulti(x,y):
                             {'hotelname': hotelname[0], 'postalcode': item[0], 'latitude': item[1],
                              'longitude': item[2],
                              'review_pos': item[3], 'review_neg': item[4],
-                             'review_text': str(item[3]) + ' ' + str(item[4]), 'review-score': item[5]})
-
+                             'review_text': str(item[3]) + ' ' + str(item[4]), 'review-score': item[5],'overall_score':item[6],
+                             'cleanliness':item[7],'comfort':item[8],'location':item[9],'facilities':item[10],
+                             'staff':item[11],'value_for_money':item[12],'Free_Wifi':item[13]})
+                             
+                            
                 with open('SingaporeHotel.csv', "a", newline='', encoding="utf-8") as csvFile:
                     fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg',
                                   'review_text', 'review-score']
