@@ -61,10 +61,10 @@ def remove_punctuation(text):
 def generate_dataframe_column(dataframe_input):
     dataframez = dataframe_input.dropna(subset=['reviews_text'])
 
-    dataframenew = dataframez[['reviews_text']]
+    dataframenew = dataframez[['hotelname','postalcode','review_pos','review_neg','reviews_text','reviews_rating']]
     function = lambda title: vader.polarity_scores(title)['compound']
     dataframenew['compound'] = dataframenew['reviews_text'].apply(function)
-
+    dataframenew['sentiment_reviews'] = dataframenew['reviews_rating'].apply(lambda rating: 'Positive' if rating > 3 else ('Neutral' if rating == 3 else 'Negative'))
     return dataframenew
 
 
@@ -118,12 +118,15 @@ def wordcloud_gen(dataframe): #Get dataframe from previous function breakdown_da
     plt.savefig('wordcloudNeg.png')
     plt.show()
 
+def overallscore(csvfile):
+    
+
 if __name__ == '__main__':
     #Sample on how to use the whole program
     print("Test")
-    test=read_csv(r"C:\Users\Reynaldi\Downloads\SITProject\datafiniti_hotel_reviews.csv") #Use your own local file location
+    test=pd.read_csv(r"C:\Users\Reynaldi\Downloads\SITProject\SingaporeHotel.csv",encoding='latin1') #Use your own local file location
     graph=generate_graph(test)
-
+    print("pass")
     graphz=generate_stopword(test)
     dataframez=generate_dataframe_column(test)
     new_dataframez = breakdown_dataframe(dataframez)
@@ -131,3 +134,4 @@ if __name__ == '__main__':
     print(new_dataframez.head())
 
     word_cloud_gen = wordcloud_gen(new_dataframez)
+    export_csv(dataframez)

@@ -133,7 +133,7 @@ def scrapemulti(x,y):
                 from geopy.geocoders import Nominatim
 
                 geolocator = Nominatim(user_agent="geoapiExercises")
-                location = geolocator.geocode(postalcodefinal+ ' Singapore, SG')
+                location = geolocator.geocode(postalcodefinal+ ' SG', exactly_one=True, timeout=60)
                 getLoc = location.raw
 
                 updatedscore = []
