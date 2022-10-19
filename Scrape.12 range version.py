@@ -108,11 +108,11 @@ def scrapemulti(x,y):
                     if review_check_pos(review_fix_test) == True:
                         review_pos.append(pos_review)
                     if review_check_pos(review_fix_test) == False:
-                        review_pos.append(["No positive review"])
+                        review_pos.append([""])
                     if review_check_neg(review_fix_test) == True:
                         review_neg.append(neg_review)
                     if review_check_neg(review_fix_test) == False:
-                        review_neg.append(["No negative review"])
+                        review_neg.append([""])
                 review_negz = [item for sublist in review_neg for item in sublist]
                 review_negz = [item.replace('\n', '') for item in review_negz]
 
