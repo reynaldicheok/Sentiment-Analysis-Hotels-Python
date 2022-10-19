@@ -61,8 +61,6 @@ def scrapeone(x):
             hoteladdress = [t.get_text(strip=True) for t in soup.find_all('p', attrs={'class': 'hotel_address'})]
             review_score = [t.get_text(strip=True) for t in
                             soup.find_all('span', attrs={'class': 'review-score-badge'})]
-            overall_review = [review_score[0]]
-            scoresz = [t.get_text(strip=True) for t in soup.find_all('p', attrs={'class': 'review_score_value'})]
             review_score = review_score[1::]
             # test_texxt=soup.find_all("span", itemprop="reviewBody") #Retrieves all text within the reviewBody so mixes both positive and negative
 
@@ -127,7 +125,7 @@ def scrapeone(x):
                     updatedscore.append(5)
 
 
-            combined = zip(review_posz, review_negz, updatedscore,overall_review,scoresz[0],scoresz[1],scoresz[2],scoresz[3],scoresz[4],scoresz[5],scoresz[6])
+            combined = zip(review_posz, review_negz, updatedscore)
 
             combined2 = []
             for i in combined:
@@ -137,7 +135,7 @@ def scrapeone(x):
             'print output to csv'
 
             with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
-                fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg', 'review_text', 'review-score','overall_score','cleanliness','comfort','location','facilities','staff','value_for_money','Free_Wifi']
+                fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg', 'review_text', 'review-score']
                 writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
                 if writeheader == True:
                     writer.writeheader()
@@ -145,9 +143,7 @@ def scrapeone(x):
                 for item in combined2:
                     writer.writerow(
                         {'hotelname': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
-                         'review_pos': item[3], 'review_neg': item[4], 'review_text': str(item[3]) +' '+ str(item[4]),'review-score': item[5],
-                         'overall_score': item[6],'cleanliness': item[7],'comfort': item[8],'location': item[9],'facilities': item[10],
-                         'staff': item[11],'value_for_money': item[12],'Free_Wifi': item[13]})
+                         'review_pos': item[3], 'review_neg': item[4], 'review_text': str(item[3]) +' '+ str(item[4]),'review-score': item[5]})
 
             with open('SingaporeHotel.csv', "a", newline='', encoding="utf-8") as csvFile:
                 fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg','review_text', 'review-score']
@@ -168,4 +164,3 @@ def scrapeone(x):
 
 
 test = scrapeone(input_url)
-
