@@ -7,10 +7,11 @@ from folium.plugins import HeatMap
 import branca.colormap
 from collections import defaultdict
 import altair as alt
+import altair_saver
 
 # User input
 df01 = pd.read_csv('SingaporeHotel.csv', encoding="ISO-8859-1")
-df02 = pd.read_csv('voco Orchard Singapore.csv', encoding="ISO-8859-1")
+df02 = pd.read_csv('Four Seasons Hotel Singapore.csv', encoding="ISO-8859-1")
 
 'Histogram'
 
@@ -238,7 +239,7 @@ def ushotelvicinitymap(x, y):
                     <body>
                     <table>
                     <tr>
-                    <th><h3>""" + pointername + """</h3></th>
+                    <th><h3>""" + str(pointername) + """</h3></th>
                     <th><h3>""" + df['hotelname'][i] + """</h3></th>
                     </tr>
                     <tr>
@@ -260,10 +261,10 @@ def ushotelvicinitymap(x, y):
                     <td><div id="vis3"></div></td>
                     </tr>
                     <tr>
-                    <td><table><tr><th>Latest Review</th><th>Rating</th></tr><tr><td><table><tr><th>Positive Review</th><th>Negative Review</th></tr><tr><td>""" + pointerhighreviewtext + """</td><td>""" + pointerlowreviewtext + """</td></tr></table></td><td>""" + str(
-                pointerreviewscore) + """</td></tr></table></td>
-                    <td><table><tr><th>Latest Review</th><th>Rating</th></tr><tr><td><table><tr><th>Positive Review</th><th>Negative Review</th></tr><tr><td>""" + highreviewtext + """</td><td>""" + lowreviewtext + """</td></tr></table></td><td>""" + str(
-                reviewscore) + """</td></tr></table></td>
+                    <td><table><tr><th>Latest Review</th><th>Rating</th></tr><tr><td><table><tr><th>Positive Review</th><th>Negative Review</th></tr><tr><td>""" + \
+                    str(pointerhighreviewtext) + """</td><td>""" + str(pointerlowreviewtext) + """</td></tr></table></td><td>""" + str(pointerreviewscore) + """</td></tr></table></td>
+                    <td><table><tr><th>Latest Review</th><th>Rating</th></tr><tr><td><table><tr><th>Positive Review</th><th>Negative Review</th></tr><tr><td>""" + \
+                    str(highreviewtext) + """</td><td>""" + str(lowreviewtext) + """</td></tr></table></td><td>""" + str(reviewscore) + """</td></tr></table></td>
                     </tr>  
                     </table>
                     <table>
@@ -395,14 +396,20 @@ def ushotelvicinitymap(x, y):
                                                                                                     autosize=alt.AutoSizeParams(
                                                                                                         type='pad',
                                                                                                         contains='padding'))
-            chart5 = alt.Chart(source5).mark_bar().encode(alt.X('Positive/Negative amount:Q'), alt.Y('Sentiment:N'),
-                                                          tooltip=alt.Tooltip('Positive/Negative amount:Q'),
+            chart5 = alt.Chart(source5).mark_bar().encode(alt.X('Positive/Negative amount:Q'), alt.Y('Sentiment:N'),tooltip=alt.Tooltip('Positive/Negative amount:Q'),
                                                           color='Sentiment:N', row=alt.Row('Review Rating',
                                                                                            sort=['Positive',
                                                                                                  'Negative'])).transform_fold(
                 as_=['Sentiment', 'Positive/Negative amount'], fold=[pointername, df['hotelname'][i]]).properties(
                 width=700, title=pointername + ' against ' + df['hotelname'][i],
                 autosize=alt.AutoSizeParams(type='pad', contains='padding'))
+
+            chart0.save('chart0.png')
+            chart1.save('chart1.png')
+            chart2.save('chart2.png')
+            chart3.save('chart3.png')
+            chart4.save('chart4.png')
+            chart5.save('chart5.png')
 
             charts_code = html_template.format(
                 vega_version=alt.VEGA_VERSION,
