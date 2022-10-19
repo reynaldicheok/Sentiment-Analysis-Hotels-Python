@@ -16,7 +16,7 @@ df = pd.read_csv('Citadines Rochor.csv', encoding = "ISO-8859-1")
 """this is where the csv file will dynamically change so can just run scrapeone and input the csv file created from scrapeone into here.
    still working on making this a function"""
 
-""""""
+"""can just ignore all these below bc its just reading all the reviews and sorting them"""
 #synonym check
 _review_2 = []
 # getting review strings and appending it to the _review_ list
@@ -46,7 +46,7 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                   "dusty","paper","street","another","open","corridor","outside","nice","poor","use","rude","lavender","want","theres",
                   "see","friendly","helpful","disgusting","terrible","areas","liked","needed","turn","keep","short","tall","come","came",
                   "went","huge","change","changes","found","home"])
-_review_count_ = [] 
+_review_count_ = []
 """^this is where all the top listed words will be so you can use this for your part"""
 
 # getting name string from our list and using split function, later appending to list above
@@ -118,4 +118,3 @@ viz_5.set_xlabel('Words')
 viz_5.set_xticklabels(viz_5.get_xticklabels(), rotation=80)
 plt.savefig('top15words.png')
 plt.show()
-
