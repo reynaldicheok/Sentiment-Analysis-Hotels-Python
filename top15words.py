@@ -18,10 +18,10 @@ df = pd.read_csv('Citadines Rochor.csv', encoding = "ISO-8859-1")
 
 """can just ignore all these below bc its just reading all the reviews and sorting them"""
 #synonym check
-_review_2 = []
+_review_ = []
 # getting review strings and appending it to the _review_ list
 for review in df.review_text:
-    _review_2.append(review)
+    _review_.append(review)
 
 # setting a function that will split those reviews strings into separate words
 def split_name(review):
@@ -53,7 +53,7 @@ _review_count_ = []
 # Punctuation: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
 punctuation = [",",";",":","?",".","\'","\\","-","(",")","+","#","@","<",">","_","{","}","[","]","/","*","%"]
 
-for x in _review_2:
+for x in _review_:
     for word in split_name(x):
         if word in punctuation:
             continue
@@ -105,7 +105,7 @@ for i in range(len(_review_count_)):
 """this is where the graph will be created"""
 _top_15_w = Counter(_review_count_).most_common()
 # Sort number of words viewed
-_top_15_w = _top_15_w[0:15] 
+_top_15_w = _top_15_w[0:15]
 """^you can use this variable for ur part bc it will choose the top 15 words"""
 
 sub_w=pd.DataFrame(_top_15_w)
