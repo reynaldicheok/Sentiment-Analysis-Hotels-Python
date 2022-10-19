@@ -47,7 +47,7 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                   "see","friendly","helpful","disgusting","terrible","areas","liked","needed","turn","keep","short","tall","come","came",
                   "went","huge","change","changes","found","home"])
 _review_count_ = []
-"""^this is where all the top listed words will be so you can use this for your part"""
+"""^this is where all the filtered words from the reviews will be listed"""
 
 # getting name string from our list and using split function, later appending to list above
 # Punctuation: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
@@ -102,10 +102,11 @@ for i in range(len(_review_count_)):
     else:
         continue
 
-"""this is where the graph will be created. can just ignore"""
+"""this is where the graph will be created"""
 _top_15_w = Counter(_review_count_).most_common()
 # Sort number of words viewed
-_top_15_w = _top_15_w[0:15]
+_top_15_w = _top_15_w[0:15] 
+"""^you can use this variable for ur part bc it will choose the top 15 words"""
 
 sub_w=pd.DataFrame(_top_15_w)
 sub_w.rename(columns={0:'Words', 1:'Count'}, inplace=True)
