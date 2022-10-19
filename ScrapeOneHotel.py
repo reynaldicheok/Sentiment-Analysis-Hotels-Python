@@ -127,7 +127,7 @@ def scrapeone(x):
                     updatedscore.append(5)
 
 
-            combined = zip(review_posz, review_negz, updatedscore,scoresz[0],scoresz[1],scoresz[2],scoresz[3],scoresz[4],scoresz[5],scoresz[6])
+            combined = zip(review_posz, review_negz, updatedscore,overall_review,scoresz[0],scoresz[1],scoresz[2],scoresz[3],scoresz[4],scoresz[5],scoresz[6])
 
             combined2 = []
             for i in combined:
