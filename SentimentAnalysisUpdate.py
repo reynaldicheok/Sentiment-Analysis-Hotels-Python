@@ -19,6 +19,7 @@ nltk.download('stopwords')
 from nltk.corpus import stopwords
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
+import os
 
 nltk.download('vader_lexicon')
 vader = SentimentIntensityAnalyzer()
@@ -72,8 +73,9 @@ def generate_stopword(csv_df):
     wordcloud = WordCloud(stopwords=stopwords).generate(textt)
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
-    plt.savefig('wordcloud12.png')
-    plt.show()
+    plt.savefig('C:/Users/USER/Documents/Pycharm_download/Hotel/app/static/css/wordcloud12.png')  
+    plt.close('all')
+    # plt.show()
 
 
 def remove_punctuation(text):
@@ -85,6 +87,8 @@ def remove_punctuation(text):
 # Function to generate the data frame analysis column along with the vader lexicon compound numbers
 # Used to get a solid breakdown later
 def generate_dataframe_column(dataframe_input):
+    print(dataframe_input)
+    dataframe_input.head(10)
     dataframez = dataframe_input.dropna(subset=['review_text'])
 
     dataframenew = dataframez[['hotelname', 'postalcode', 'review_pos', 'review_neg', 'review_text', 'review-score']]
@@ -92,7 +96,6 @@ def generate_dataframe_column(dataframe_input):
     dataframenew['compound'] = dataframenew['review_text'].apply(function)
     dataframenew['sentiment_score'] = dataframenew['review-score'].apply(
         lambda rating: 'Positive' if rating > 3 else ('Neutral' if rating == 3 else 'Negative'))
-
     return dataframenew
 
 
@@ -138,20 +141,16 @@ def lowest_review(csvfile): #most negative review
     output=finaltest[0][0::]
     return output
 
-def top_ten_pos(csvfile):
+def top_ten_pos(csvfile): #for all the reviews in the database
     reader = csvfile
-
     mostpositive = reader.nlargest(10,['review-score','compound'])
-
     finaltest = mostpositive.values.tolist()
     output = finaltest
     return output
 
 def top_ten_neg(csvfile):
     reader = csvfile
-
     mostpositive = reader.nsmallest(10,['review-score','compound'])
-
     finaltest = mostpositive.values.tolist()
     output = finaltest
     return output
@@ -173,8 +172,9 @@ def wordcloud_gen(dataframe):  # Get dataframe from previous function breakdown_
     wordcloud2 = WordCloud(stopwords=stopwords).generate(pos)
     plt.imshow(wordcloud2, interpolation='bilinear')
     plt.axis("off")
-    plt.savefig('wordcloudPos.png')
-    plt.show()
+    plt.savefig('C:/Users/USER/Documents/Pycharm_download/Hotel/app/static/css/wordcloudPos.png')  
+    plt.close('all')
+    #plt.show()
 
     # In[6]:
 
@@ -183,8 +183,9 @@ def wordcloud_gen(dataframe):  # Get dataframe from previous function breakdown_
     wordcloud3 = WordCloud(stopwords=stopwords).generate(neg)
     plt.imshow(wordcloud3, interpolation='bilinear')
     plt.axis("off")
-    plt.savefig('wordcloudNeg.png')
-    plt.show()
+    plt.savefig('C:/Users/USER/Documents/Pycharm_download/Hotel/app/static/css/wordcloudNeg.png')  
+    plt.close('all')
+    #plt.show()
 
 
 def func(pct, allvalues): #Pie chart formatting
@@ -204,7 +205,9 @@ def rating(csvfile):#Data display
     ax.legend(mylabels,title ="Sentiment",
           loc ="center left",
           bbox_to_anchor =(1, 1))
-    plt.show()
+    plt.savefig('C:/Users/USER/Documents/Pycharm_download/Hotel/app/static/css/rating.png')  
+    plt.close('all')
+    #plt.show()
 
 def rating_further(csvfile):#DAta display with the neutral positive and neutral negative scores and neutral neutral
     pos_count = len(csvfile[csvfile['sentiment_score'] == 'Positive'])
@@ -224,16 +227,19 @@ def rating_further(csvfile):#DAta display with the neutral positive and neutral 
     ax.legend(mylabels, title="Sentiment",
               loc="center left",
               bbox_to_anchor=(1, 1))
-    plt.show()
+    plt.savefig('C:/Users/USER/Documents/Pycharm_download/Hotel/app/static/css/rating_further.png')  
+    plt.close('all')
+    #plt.show()
 
-def scrapeone(x):
+def scrapereviewoneh(x):
+    
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
     }
     start_url = x
 
     s = Service(
-        r'C:\Users\Reynaldi\Desktop\chromedriver.exe')  # Local file location for chromedriver.exe to use selenium to use the webbrowser
+        r'C:\Users\USER\Documents\Pycharm_download\Hotel\chromedriver.exe')  # Local file location for chromedriver.exe to use selenium to use the webbrowser
 
     driver = webdriver.Chrome(service=s)  # To get the chrome service started
     driver.get(start_url)  # To go to the url
@@ -331,30 +337,15 @@ def scrapeone(x):
 
         'print output to csv'
 
-        with open(hotelname[0] + ".csv", "a", encoding="utf-8", newline='') as csvFile:
-            fieldnames = ['id', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg', 'review-score']
+        with open(hotelname[0] + "_mini.csv", "a", encoding="utf-8", newline='') as csvFile:
+            fieldnames = ['hotelname', 'postalcode', 'latitude', 'longitude', 'review_pos', 'review_neg','review_text', 'review-score']
             writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
             if writeheader == True:
                 writer.writeheader()
                 writeheader = False
             for item in combined2:
-                writer.writerow({'id': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
-                                 'review_pos': item[3], 'review_neg': item[4], 'review-score': item[5]})
-
-        with open('datafiniti_hotel_reviews (2) - Copy.csv', "a", newline='', encoding="utf-8") as csvFile:
-            fieldnames = ['id', 'dateadded', 'dateupdated', 'address', 'categories', 'primarycategories', 'city',
-                          'country',
-                          'keys', 'latitude', 'longitude', 'name', 'postalcode', 'province', 'reviews_date',
-                          'reviews_dateseen', 'reviews_rating', 'reviews_sourceurls', 'reviews_text']
-            writer = csv.DictWriter(csvFile, fieldnames=fieldnames)
-            for item in combined2:
-                writer.writerow(
-                    {'id': '', 'dateadded': '', 'dateupdated': '', 'address': '', 'categories': '',
-                     'primarycategories': '',
-                     'city': '', 'country': '', 'keys': '', 'latitude': item[1], 'longitude': item[2],
-                     'name': hotelname[0], 'postalcode': item[0], 'province': '', 'reviews_date': '',
-                     'reviews_dateseen': '', 'reviews_rating': item[5], 'reviews_sourceurls': '',
-                     'reviews_text': item[3] + item[4]})
+                writer.writerow({'hotelname': hotelname[0], 'postalcode': item[0], 'latitude': item[1], 'longitude': item[2],
+                                 'review_pos': item[3], 'review_neg': item[4], 'review_text':item[3]+item[4], 'review-score': item[5]})
         csvFile.close()
         driver.find_element("xpath", "//*[contains(@id, 'review_next_page_link')]").click()
 
@@ -365,20 +356,47 @@ def scrapeone(x):
 if __name__ == '__main__':
     # Sample on how to use the whole program
     print("Test")
-    test = pd.read_csv(r"C:\Users\Reynaldi\Downloads\SingaporeHotel (3).csv",
+    test = pd.read_csv(r"C:\Users\USER\Documents\Pycharm_download\Hotel\SingaporeHotel (3).csv",
                        encoding='latin1')  # Use your own local file location
-    #graph = generate_graph(test)
-    print("pass")
-    #graphz = generate_stopword(test)
-    dataframez = generate_dataframe_column(test)
-    new_dataframez = breakdown_dataframe(dataframez)
-    rating(new_dataframez)
-    rating_further(new_dataframez)
-    print(top_ten_pos(new_dataframez))
-    scrapeone(input_url)
-    #print(new_dataframez.head())
 
-    #word_cloud_gen = wordcloud_gen(new_dataframez)
+    scrapereviewoneh(input_url)
+    #graph = generate_graph(test)
+    test2 = pd.read_csv(r"C:\Users\USER\Documents\Pycharm_download\Hotel\The Barracks Hotel Sentosa by Far East Hospitality_mini.csv",
+                       encoding='latin1')  # Use your own local file location
+
+    print("pass")
+    # #graphz = generate_stopword(test)
+    # dataframez = generate_dataframe_column(test)
+    # # # new_dataframez = breakdown_dataframe(dataframez)
+    # # # rating(new_dataframez)
+    # # # rating_further(new_dataframez)
+    # # # top_ten = top_ten_pos(new_dataframez)
+    # # # word_cloud_gen = wordcloud_gen(new_dataframez)
+    
+    # print("running test2")
+    dataframez2 = generate_dataframe_column(test2)
+    newesthotelname = dataframez2["hotelname"][0]
+    
+    new_dataframez2 = breakdown_dataframe(dataframez2)
+    rating(new_dataframez2)
+    rating_further(new_dataframez2)
+    top_ten2 = top_ten_pos(new_dataframez2)
+    word_cloud_gen2 = wordcloud_gen(new_dataframez2)
+    
+    # print(top_ten[0][0])
+    # print(top_ten[0][1])
+    # print(top_ten[0][2])
+    
+
+    
+    #print(new_dataframez.head())
+    
+    
+    
     #export_csv(new_dataframez)
     #print(new_dataframez.head(10))
     #filterhotel(dataframez,189673)
+    
+    #able to get png for rating, rating_further, wordcloudpos, wordcloudneg
+    os.remove(newesthotelname+"_mini.csv")
+
