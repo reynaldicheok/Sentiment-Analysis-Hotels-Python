@@ -66,7 +66,7 @@ def ushotelvicinitymap(x, y):
     pointername = df2['hotelname'][1]
 
     # plot where map will look
-    m = folium.Map(location=[pointerlatitude, pointerlongitude], zoom_start=16)
+    m = folium.Map(location=[pointerlatitude, pointerlongitude], zoom_start=14)
 
     # Hotel details
     popup = "<html></html>" \
