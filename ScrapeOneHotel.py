@@ -10,7 +10,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from geopy.extra.rate_limiter import RateLimiter
 
-input_url = 'https://www.booking.com/reviews/sg/hotel/four-season-singapore.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE&sid=4581fecdf88e3c532e910a9a05e6eb81'
+input_url = 'https://www.booking.com/reviews/sg/hotel/four-season-singapore.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE&sid=0592c1baed62f1328376ae7ea3a086ed&customer_type=total&hp_nav=0&old_page=0&order=featuredreviews&page=1&r_lang=en&rows=75&'
+
 
 def review_check_pos(positive_review):
     pos_review = [t.get_text(strip=True) for t in positive_review.find_all('p', attrs={
@@ -35,7 +36,7 @@ def scrapeone(x):
     start_url = x
 
     s = Service(
-        r'C:\Users\User\PycharmProjects\P4Project\chromedriver.exe')  # Local file location for chromedriver.exe to use selenium to use the webbrowser
+        r'D:\School\INF1002\Week2\chromedriver.exe')  # Local file location for chromedriver.exe to use selenium to use the webbrowser
 
     driver = webdriver.Chrome(service=s)  # To get the chrome service started
     driver.get(start_url)  # To go to the url
