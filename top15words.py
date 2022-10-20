@@ -13,10 +13,7 @@ import string
 
 
 df = pd.read_csv('Citadines Rochor.csv', encoding = "ISO-8859-1")
-"""this is where the csv file will dynamically change so can just run scrapeone and input the csv file created from scrapeone into here.
-   still working on making this a function"""
 
-"""can just ignore all these below bc its just reading all the reviews and sorting them"""
 #synonym check
 _review_ = []
 # getting review strings and appending it to the _review_ list
@@ -45,9 +42,10 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                   "filthy","greasy","sooty","moldy","grimy","grubby","soiled","unwashed","stain","stained","spotted","cloudy","muddy",
                   "dusty","paper","street","another","open","corridor","outside","nice","poor","use","rude","lavender","want","theres",
                   "see","friendly","helpful","disgusting","terrible","areas","liked","needed","turn","keep","short","tall","come","came",
-                  "went","huge","change","changes","found","home"])
+                  "went","change","changes","found","home","working","call","arrived","arrive","station","stations","find","hot","freeze"
+                  "centrally","located","things","work","instead","again","allow","allowed","requested","right","left","freezing","cold"
+                  "standard","enjoy","machine","proper","definitely","find","needs","extra","building","small","noisy"])
 _review_count_ = []
-"""^this is where all the filtered words from the reviews will be listed"""
 
 # getting name string from our list and using split function, later appending to list above
 # Punctuation: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
@@ -67,8 +65,8 @@ for x in _review_:
 # we are going to use counter
 from collections import Counter
 
-comfortable_synonyms = ["comfy","cosy","warm","pleasant","enjoyable","agreeable","congenial","plush","secure","safe","homely","snuggly"]
-service_synonyms = ["staff","staffs","servicing","assistance","help","cleaning","equipped","provided","housekeeping","reception","cleaned","towel","towels","sanitize","sanitise"]
+comfortable_synonyms = ["comfy","cosy","warm","pleasant","enjoyable","agreeable","congenial","plush","secure","safe","homely","snuggly","enjoyed"]
+service_synonyms = ["staff","staffs","servicing","assistance","help","provided","good","great"]
 dorm_synonyms = ["dorms"]
 apartment_synonyms = ["apartments"]
 toilet_synonyms = ["toilets","bathroom","bathrooms","lavatory","lavatories","urinal"]
@@ -76,7 +74,12 @@ pool_synonyms = ["pools","swim","swimming"]
 kid_synonyms = ["kid","kids","children","child","youngster","baby","toddler","infant","minor","adolescent","teenager","youth"]
 restaurant_synonyms = ["restaurants","eatery"]
 aircon_synonyms = ["ac","aircon","air-con","aircondition","air-condition","airconditioner","air-conditioner"]
-location_synonyms = ["spot","place","area"]
+location_synonyms = ["spot","place","area","central","centrally","nearby","india"]
+cleanliness_synonyms = ["clean","neat","sanitize","sanitise","spotless","sanittion","disinfect"]
+spacious_synonyms = ["wide","big","roomy","vast","large","palatial","huge"]
+facilities_synonyms = ["amenity","facility","amenities","convenience","convenient"]
+housekeeping_synonyms = ["cleaning","equipped","cleaned","towel","towels","toiletries"]
+family_synonyms = ["family","families","household"]
 #_synonyms = []
 for i in range(len(_review_count_)):
     if _review_count_[i] in comfortable_synonyms:
@@ -99,23 +102,39 @@ for i in range(len(_review_count_)):
         _review_count_[i] = "air-conditioned"
     elif _review_count_[i] in location_synonyms:
         _review_count_[i] = "location"
+    elif _review_count_[i] in cleanliness_synonyms:
+        _review_count_[i] = "cleanliness"
+    elif _review_count_[i] in spacious_synonyms:
+        _review_count_[i] = "spacious"
+    elif _review_count_[i] in facilities_synonyms:
+        _review_count_[i] = "facilities"
+    elif _review_count_[i] in housekeeping_synonyms:
+        _review_count_[i] = "housekeeping"
+    elif _review_count_[i] in family_synonyms:
+        _review_count_[i] = "family-friendly"
     else:
         continue
-
-"""this is where the graph will be created"""
+        
 _top_15_w = Counter(_review_count_).most_common()
 # Sort number of words viewed
 _top_15_w = _top_15_w[0:15]
-"""^you can use this variable for ur part bc it will choose the top 15 words"""
 
 sub_w=pd.DataFrame(_top_15_w)
 sub_w.rename(columns={0:'Words', 1:'Count'}, inplace=True)
 
+# Defining the plot size
 plt.figure(figsize=(10,6))
-viz_5=sns.barplot(x='Words', y='Count', data=sub_w)
-viz_5.set_title('Top 15 words used in reviews')
-viz_5.set_ylabel('Word Count')
-viz_5.set_xlabel('Words')
+# Defining the values for x-axis & y-axis and from which dataframe the values are to be picked
+viz_5=sns.barplot(x='Count', y='Words', data=sub_w)
+viz_5.set_title('Counts of the top 30 used words for reviews')
+viz_5.set_ylabel('Words')
+viz_5.set_xlabel('Count of words')
 viz_5.set_xticklabels(viz_5.get_xticklabels(), rotation=80)
-plt.savefig('top15words.png')
+for i in viz_5.patches:
+    viz_5.text(i.get_width()+0.2, i.get_y()+0.5,
+             str(round((i.get_width()))),
+             fontsize = 10, color ='black')
+plt.savefig('top30words.png')
 plt.show()
+
+print(stopwords)
