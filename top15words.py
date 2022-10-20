@@ -134,7 +134,7 @@ def top15words():
     plt.figure(figsize=(10,6))
     # Defining the values for x-axis & y-axis and from which dataframe the values are to be picked
     viz_5=sns.barplot(x='Count', y='Words', data=sub_w)
-    viz_5.set_title('Counts of the top 30 used words for reviews')
+    viz_5.set_title('Counts of the top 15 used words for reviews')
     viz_5.set_ylabel('Words')
     viz_5.set_xlabel('Count of words')
     for i in viz_5.patches:
