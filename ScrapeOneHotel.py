@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from geopy.extra.rate_limiter import RateLimiter
 
-input_url = 'https://www.booking.com/reviews/sg/hotel/citadines-rochor.en-gb.html?aid=356980&sid=4581fecdf88e3c532e910a9a05e6eb81&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE'
+input_url = 'https://www.booking.com/reviews/sg/hotel/four-season-singapore.en-gb.html?aid=356980&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE&sid=4581fecdf88e3c532e910a9a05e6eb81'
 
 def review_check_pos(positive_review):
     pos_review = [t.get_text(strip=True) for t in positive_review.find_all('p', attrs={
