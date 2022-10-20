@@ -1,4 +1,4 @@
-import scrape as scrapeone
+from scrape import scrapeone
 
 import pandas as pd
 import numpy as np
