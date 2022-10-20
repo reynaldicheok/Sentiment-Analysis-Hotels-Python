@@ -114,7 +114,7 @@ for i in range(len(_review_count_)):
         _review_count_[i] = "family-friendly"
     else:
         continue
-        
+
 _top_15_w = Counter(_review_count_).most_common()
 # Sort number of words viewed
 _top_15_w = _top_15_w[0:15]
@@ -134,7 +134,7 @@ for i in viz_5.patches:
     viz_5.text(i.get_width()+0.2, i.get_y()+0.5,
              str(round((i.get_width()))),
              fontsize = 10, color ='black')
-plt.savefig('top30words.png')
+plt.savefig('top15words.png')
 plt.show()
 
 print(stopwords)
