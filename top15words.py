@@ -57,7 +57,7 @@ def top15words():
     # getting name string from our list and using split function, later appending to list above
     # Punctuation: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
     punctuation = [",",";",":","?",".","\'","\\","-","(",")","+","#","@","<",">","_","{","}","[","]","/","*","%"]
-
+    ambiguous= ["","us","in","too","again"]
     for x in _review_:
         for word in split_name(x):
             if word in punctuation:
@@ -67,7 +67,8 @@ def top15words():
                 word = word.lower()
                 if word not in stopwords:
                     word = word.translate(str.maketrans('', '', string.punctuation))
-                    _review_count_.append(word)
+                    if word not in ambiguous:
+                        _review_count_.append(word)
 
     # we are going to use counter
     from collections import Counter
