@@ -35,30 +35,29 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                       "see","friendly","helpful","disgusting","terrible","areas","liked","needed","turn","keep","short","tall","come","came",
                       "went","change","changes","found","home","working","call","arrived","arrive","station","stations","find","hot","freeze"
                       "centrally","located","things","work","instead","again","allow","allowed","requested","right","left","freezing","cold"
-                      "standard","enjoy","machine","proper","definitely","find","needs","extra","building","small","noisy","nil"])
+                      "standard","enjoy","machine","proper","definitely","find","needs","extra","building","small","noisy","nil","standard])
 
 def top15words():
-    csvfile = scrapeone(input_url)
-    df = pd.read_csv(csvfile, encoding = "ISO-8859-1")
+    df = pd.read_csv(scrapeone(input_url), encoding = "ISO-8859-1")
 
     #synonym check
     _review_ = []
     # getting review strings and appending it to the _review_ list
     for review in df.review_text:
         _review_.append(review)
-    
+
     # setting a function that will split those reviews strings into separate words
     def split_name(review):
         spl = str(review).split()
         return spl
-    
-    
+
+
     _review_count_ = []
-    
+
     # getting name string from our list and using split function, later appending to list above
     # Punctuation: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
     punctuation = [",",";",":","?",".","\'","\\","-","(",")","+","#","@","<",">","_","{","}","[","]","/","*","%"]
-    
+
     for x in _review_:
         for word in split_name(x):
             if word in punctuation:
@@ -69,10 +68,10 @@ def top15words():
                 if word not in stopwords:
                     word = word.translate(str.maketrans('', '', string.punctuation))
                     _review_count_.append(word)
-    
+
     # we are going to use counter
     from collections import Counter
-    
+
     comfortable_synonyms = ["comfy","cosy","warm","pleasant","enjoyable","agreeable","congenial","plush","secure","safe","homely","snuggly","enjoyed"]
     service_synonyms = ["staff","staffs","servicing","assistance","help","provided","good","great"]
     dorm_synonyms = ["dorms"]
@@ -122,14 +121,14 @@ def top15words():
             _review_count_[i] = "family-friendly"
         else:
             continue
-    
+
     _top_15_w = Counter(_review_count_).most_common()
     # Sort number of words viewed
     _top_15_w = _top_15_w[0:15]
-    
+
     sub_w=pd.DataFrame(_top_15_w)
     sub_w.rename(columns={0:'Words', 1:'Count'}, inplace=True)
-    
+
     # Defining the plot size
     plt.figure(figsize=(10,6))
     # Defining the values for x-axis & y-axis and from which dataframe the values are to be picked
@@ -137,12 +136,11 @@ def top15words():
     viz_5.set_title('Counts of the top 30 used words for reviews')
     viz_5.set_ylabel('Words')
     viz_5.set_xlabel('Count of words')
-    viz_5.set_xticklabels(viz_5.get_xticklabels(), rotation=80)
     for i in viz_5.patches:
         viz_5.text(i.get_width()+0.2, i.get_y()+0.5,
                  str(round((i.get_width()))),
                  fontsize = 10, color ='black')
     plt.savefig('top15words.png')
     plt.show()
-    
+
 top15words()
