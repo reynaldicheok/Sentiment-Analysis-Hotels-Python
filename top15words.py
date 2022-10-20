@@ -1,4 +1,4 @@
-from scrape import scrapeone
+from ScrapeOneHotel import scrapeone
 
 import pandas as pd
 import numpy as np
