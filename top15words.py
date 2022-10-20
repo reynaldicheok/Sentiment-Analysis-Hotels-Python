@@ -57,7 +57,7 @@ def top15words():
     # getting name string from our list and using split function, later appending to list above
     # Punctuation: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
     punctuation = [",",";",":","?",".","\'","\\","-","(",")","+","#","@","<",">","_","{","}","[","]","/","*","%"]
-
+    ambiguous= ["","us","in","too","again"]
     for x in _review_:
         for word in split_name(x):
             if word in punctuation:
@@ -67,7 +67,8 @@ def top15words():
                 word = word.lower()
                 if word not in stopwords:
                     word = word.translate(str.maketrans('', '', string.punctuation))
-                    _review_count_.append(word)
+                    if word not in ambiguous:
+                        _review_count_.append(word)
 
     # we are going to use counter
     from collections import Counter
@@ -133,7 +134,7 @@ def top15words():
     plt.figure(figsize=(10,6))
     # Defining the values for x-axis & y-axis and from which dataframe the values are to be picked
     viz_5=sns.barplot(x='Count', y='Words', data=sub_w)
-    viz_5.set_title('Counts of the top 30 used words for reviews')
+    viz_5.set_title('Counts of the top 15 used words for reviews')
     viz_5.set_ylabel('Words')
     viz_5.set_xlabel('Count of words')
     for i in viz_5.patches:
