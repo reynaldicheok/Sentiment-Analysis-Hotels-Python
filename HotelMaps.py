@@ -7,7 +7,7 @@ from folium.plugins import HeatMap
 import branca.colormap
 from collections import defaultdict
 import altair as alt
-import altair_saver
+
 
 # User input
 df01 = pd.read_csv('SingaporeHotel.csv', encoding="ISO-8859-1")
@@ -403,13 +403,6 @@ def ushotelvicinitymap(x, y):
                 as_=['Sentiment', 'Positive/Negative amount'], fold=[pointername, df['hotelname'][i]]).properties(
                 width=700, title=pointername + ' against ' + df['hotelname'][i],
                 autosize=alt.AutoSizeParams(type='pad', contains='padding'))
-
-            chart0.save('chart0.png')
-            chart1.save('chart1.png')
-            chart2.save('chart2.png')
-            chart3.save('chart3.png')
-            chart4.save('chart4.png')
-            chart5.save('chart5.png')
 
             charts_code = html_template.format(
                 vega_version=alt.VEGA_VERSION,
