@@ -35,10 +35,21 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                       "see","friendly","helpful","disgusting","terrible","areas","liked","needed","turn","keep","short","tall","come","came",
                       "went","change","changes","found","home","working","call","arrived","arrive","station","stations","find","hot","freeze"
                       "centrally","located","things","work","instead","again","allow","allowed","requested","right","left","freezing","cold"
-                      "standard","enjoy","machine","proper","definitely","find","needs","extra","building","small","noisy","nil","standard"])
+                      "standard","enjoy","machine","proper","definitely","find","needs","extra","building","small","noisy","nil","standard"
+                      "awesome","spent","recommend","recommended","recommendation","hours","awkward","hose","fix","fixed","work","worked","give",
+                      "broke","broken","wall","point","pointed","evening","tea","cake","fantastic","everyone","thank","sure","care","impeccable",
+                      "experience","absolute","absolutely","special","crowds","limited","amount","guests","step","complaints","laid","charm",
+                      "added","canapã©s","didnâ\x80\x99t","beautiful","surprise","team","got","direct","experience","attentive","exceptional",
+                      "couple","couples","birthday","prepare","prepared","quiet","beyond","outstanding","1904","felt","making","met","spritz",
+                      "gavin","afternoon","hi","relaxing","peaceful","peace","personal","personalised","wish","wishes","thing","drinks",
+                      "might","pay","paid","payable","feeling","part","offer","choice","choices","course","yet","kept","checking","check",
+                      "checks","wonderful","canâ\x80\x99t","polite","you","me","aaron","anniversary","receive","received","receives","bottle",
+                      "member","personalize","personalized","names","name","named","flow","emily","welcomed","welcome","mr","mrs","ms","mister",
+                      "misses","missus","miss"])
 
 def top15words():
-    df = pd.read_csv(scrapeone(input_url), encoding = "ISO-8859-1")
+    #df = pd.read_csv(scrapeone(input_url), encoding = "ISO-8859-1")
+    df = pd.read_csv('The Barracks Hotel Sentosa by Far East Hospitality.csv', encoding = "ISO-8859-1")
 
     #synonym check
     _review_ = []
@@ -57,7 +68,9 @@ def top15words():
     # getting name string from our list and using split function, later appending to list above
     # Punctuation: !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
     punctuation = [",",";",":","?",".","\'","\\","-","(",")","+","#","@","<",">","_","{","}","[","]","/","*","%"]
-    ambiguous= ["","us","in","too","again"]
+    ambiguous= ["","us","in","too","again","well","india","singapore","stay","good","great","awesome","stations","station","time","no","yes",
+                "amazing","it","nothing","experience","everything","food","pay","paid","surprise","beyond","choice","choices","exceptional",
+                "wonderful","team","personal","you","me","relaxing","night","day","nice","lovely"]
     for x in _review_:
         for word in split_name(x):
             if word in punctuation:
@@ -73,13 +86,13 @@ def top15words():
     # we are going to use counter
     from collections import Counter
 
-    comfortable_synonyms = ["comfy","cosy","warm","pleasant","enjoyable","agreeable","congenial","plush","secure","safe","homely","snuggly","enjoyed"]
-    service_synonyms = ["staff","staffs","servicing","assistance","help","provided","good","great"]
+    comfortable_synonyms = ["comfy","cosy","warm","pleasant","enjoyable","agreeable","congenial","plush","secure","safe","homely","snuggly","enjoyed","cozy","coziness"]
+    service_synonyms = ["staff","staffs","servicing","assistance","help","provided","checkin","checkout","friendly","provided","provide","serve","served","helpful"]
     dorm_synonyms = ["dorms"]
     apartment_synonyms = ["apartments"]
-    toilet_synonyms = ["toilets","bathroom","bathrooms","lavatory","lavatories","urinal"]
+    toilet_synonyms = ["toilets","bathroom","bathrooms","lavatory","lavatories","urinal","sink"]
     pool_synonyms = ["pools","swim","swimming"]
-    kid_synonyms = ["kid","kids","children","child","youngster","baby","toddler","infant","minor","adolescent","teenager","youth"]
+    kid_synonyms = ["kid","kids","children","child","youngster","baby","toddler","infant","minor","adolescent","teenager","youth","son","daughter"]
     restaurant_synonyms = ["restaurants","eatery"]
     aircon_synonyms = ["ac","aircon","air-con","aircondition","air-condition","airconditioner","air-conditioner"]
     location_synonyms = ["spot","place","area","central","centrally","nearby","india"]
@@ -88,6 +101,7 @@ def top15words():
     facilities_synonyms = ["amenity","facility","amenities","convenience","convenient"]
     housekeeping_synonyms = ["cleaning","equipped","cleaned","towel","towels","toiletries"]
     family_synonyms = ["family","families","household"]
+    bar_synonyms = ["alcohol","liquor","cocktail","booze","cocktails","champagne","wine","winery"]
     #_synonyms = []
     for i in range(len(_review_count_)):
         if _review_count_[i] in comfortable_synonyms:
@@ -120,6 +134,8 @@ def top15words():
             _review_count_[i] = "housekeeping"
         elif _review_count_[i] in family_synonyms:
             _review_count_[i] = "family-friendly"
+        elif _review_count_[i] in bar_synonyms:
+            _review_count_[i] = "bar"
         else:
             continue
 
