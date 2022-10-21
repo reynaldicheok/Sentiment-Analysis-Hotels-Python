@@ -31,7 +31,20 @@ fig.show()
 
 # Create stopword list:
 stopwords = set(stopwords.words('english'))
-stopwords.update(["br", "href","room","hotel","rooms","good","great"])
+stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","could","really","get","also","us","one","time","great",
+                  "good","bad","nice","like","best","review","reviews","negative","positive","little","well","check","super",
+                  "quite","india","singapore","malaysia","china","japan","korea","philippines","door","day","night","everything",
+                  "nothing","entrance","need","first","last","close","even","in","pillow","pillows","still","wet","value","late",
+                  "guest","guests","always","morning","sleep","place","places","feel","feels","people","floor","front","worth",
+                  "walking","lovely","love","made","make","plus","overall","air","free","pressure","it","access","go","wonderful",
+                  "probably","2","near","staying","within","better","request","around","size","long","way","activity","too","got"
+                  "activities","two","loved","especially","much","property","back","desk","in","1","bit","ice","tap","told","side",
+                  "water","take","cream","new","excellent","different","though","lobby","took","well","walk","available","next","3",
+                  "wait","lack","perfect","book","booked","booking","early","fun","ask","asked","enough","amazing","rail","rails",
+                  "easy","hard","difficult","extremely","extreme","4","smell","5","6","7","8","9","10","money","every","food","space",
+                  "distance","many","hear","said","pay","days","ok","okay","price","luggage","pretty","fast","all","due","noise","dirty",
+                  "filthy","greasy","sooty","moldy","grimy","grubby","soiled","unwashed","stain","stained","spotted","cloudy","muddy",
+                  "dusty","paper"])
 textt = " ".join(map(str,df.review_text))
 wordcloud = WordCloud(stopwords=stopwords).generate(textt)
 plt.imshow(wordcloud, interpolation='bilinear')
