@@ -48,8 +48,7 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                       "misses","missus","miss"])
 
 def top15words():
-    #df = pd.read_csv(scrapeone(input_url), encoding = "ISO-8859-1")
-    df = pd.read_csv('The Barracks Hotel Sentosa by Far East Hospitality.csv', encoding = "ISO-8859-1")
+    df = pd.read_csv(scrapeone(input_url), encoding = "ISO-8859-1")
 
     #synonym check
     _review_ = []
