@@ -12,13 +12,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 color = sns.color_palette()
 import string
-
+from gensim.parsing.preprocessing import STOPWORDS
+import spacy
 
 input_url = 'https://www.booking.com/reviews/sg/hotel/citadines-rochor.en-gb.html?aid=356980&sid=4581fecdf88e3c532e910a9a05e6eb81&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE'
 
 # initializing empty list where we are going to have words counted
-stopwords = set(stopwords.words('english'))
-stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","could","really","get","also","us","one","time","great",
+stopwords_nltk = set(stopwords.words('english'))
+stopwords_nltk.update(["br","href","hotel","room","rooms","stay","stayed","would","could","really","get","also","us","one","time","great",
                       "good","bad","nice","like","best","review","reviews","negative","positive","little","well","check","super",
                       "quite","india","singapore","malaysia","china","japan","korea","philippines","door","day","night","everything",
                       "nothing","entrance","need","first","last","close","even","in","pillow","pillows","still","wet","value","late",
@@ -47,8 +48,16 @@ stopwords.update(["br","href","hotel","room","rooms","stay","stayed","would","co
                       "member","personalize","personalized","names","name","named","flow","emily","welcomed","welcome","mr","mrs","ms","mister",
                       "misses","missus","miss"])
 
+stopwords_gensim = STOPWORDS
+sw_list = {"not"}
+stopwords_gensim = STOPWORDS.difference(sw_list)
+
+sp = spacy.load('en_core_web_sm')
+stopwords_sp = sp.Defaults.stop_words
+
 def top15words():
-    df = pd.read_csv(scrapeone(input_url), encoding = "ISO-8859-1")
+    #df = pd.read_csv(scrapeone(input_url), encoding = "ISO-8859-1")
+    df = pd.read_csv('The Barracks Hotel Sentosa by Far East Hospitality.csv', encoding = "ISO-8859-1")
 
     #synonym check
     _review_ = []
@@ -77,10 +86,12 @@ def top15words():
             else:
                 word = word.strip() #removes whitespace
                 word = word.lower()
-                if word not in stopwords:
-                    word = word.translate(str.maketrans('', '', string.punctuation))
-                    if word not in ambiguous:
-                        _review_count_.append(word)
+                if word not in stopwords_nltk:
+                    if word not in stopwords_gensim:
+                        if word not in stopwords_sp:
+                            word = word.translate(str.maketrans('', '', string.punctuation))
+                            if word not in ambiguous:
+                                _review_count_.append(word)
 
     # we are going to use counter
     from collections import Counter
