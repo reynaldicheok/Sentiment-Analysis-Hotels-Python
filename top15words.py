@@ -13,6 +13,7 @@ import seaborn as sns
 color = sns.color_palette()
 import string
 from gensim.parsing.preprocessing import STOPWORDS
+from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
 input_url = 'https://www.booking.com/reviews/sg/hotel/citadines-rochor.en-gb.html?aid=356980&sid=4581fecdf88e3c532e910a9a05e6eb81&label=gog235jc-1FEgdyZXZpZXdzKIICOOgHSDNYA2jJAYgBAZgBCbgBF8gBDNgBAegBAfgBDYgCAagCA7gCgrj9mAbAAgHSAiQ1NjY2NDdjNy03NjEzLTRiNjEtYjQ1OC04MDk1Y2M2MzhlYjLYAgbgAgE'
 
@@ -51,6 +52,7 @@ stopwords_gensim = STOPWORDS
 sw_list = {"not"}
 stopwords_gensim = STOPWORDS.difference(sw_list)
 
+
 def top15words():
     #df = pd.read_csv(scrapeone(input_url), encoding = "ISO-8859-1")
     df = pd.read_csv('The Barracks Hotel Sentosa by Far East Hospitality.csv', encoding = "ISO-8859-1")
@@ -84,9 +86,10 @@ def top15words():
                 word = word.lower()
                 if word not in stopwords_nltk:
                     if word not in stopwords_gensim:
-                        word = word.translate(str.maketrans('', '', string.punctuation))
-                        if word not in ambiguous:
-                            _review_count_.append(word)
+                        if word not in ENGLISH_STOP_WORDS:
+                            word = word.translate(str.maketrans('', '', string.punctuation))
+                            if word not in ambiguous:
+                                _review_count_.append(word)
 
     # we are going to use counter
     from collections import Counter
